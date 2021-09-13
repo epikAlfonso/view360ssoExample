@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+    <div>{{token}}</div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import store from '@/store'
+import tokenMixin from '../mixin/token'
 
-@Options({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+@Options({})
+export default class Home extends Vue {
+    get token(): string {
+        return store.getters.getToken
+    }
+
+    set token(token: string)  {
+        store.commit('SET_TOKEN', token)
+    }
+
+    public mounted(): void {
+        this.checkToken()
+    }
+
+    private checkToken(): void {
+        const token = tokenMixin.getToken(this)
+        if(token !== null) {
+            this.token = token
+        } else {
+            this.$router.push('auth')
+        }
+    }
+}
 </script>
