@@ -3,7 +3,7 @@ module.exports = {
         {
             name: "WEB",
             script: "./node_modules/@vue/cli-service/bin/vue-cli-service.js",
-            args: "serve"
+            args: "serve --port 4200"
         }
     ]
 };
