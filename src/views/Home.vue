@@ -1,5 +1,5 @@
 <template>
-    <div>{{token}}</div>
+    <div>{{userInfo}}</div>
 </template>
 
 <script lang="ts">
@@ -9,6 +9,11 @@ import tokenMixin from '../mixin/token'
 
 @Options({})
 export default class Home extends Vue {
+    get userInfo(): string {
+        const user = tokenMixin.decode(this, store.getters.getToken)
+        return `Logged user ${user.username} exp at ${user.exp}`
+    }
+
     get token(): string {
         return store.getters.getToken
     }
